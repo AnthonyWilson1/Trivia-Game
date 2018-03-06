@@ -8,6 +8,12 @@ var incorrect = 0
 
 var unanswered = 0
 
+var set1 = []
+
+var set2 = []
+
+var set3 = []
+
 var triviaGame = {
 
 questionOne: "Question One: Which Suits character never went to law school?",
@@ -18,19 +24,9 @@ questionThree: "Question Three: What is the name of the paralegal Mike falls in 
 
 answerOne: ["Mike", "Harvey", "Scotty", "Louis "],
 
-answerTwo: [
-    "Harvard",
-    "Yale",
-    "Duke",
-    "Columbia",
-],
+answerTwo: ["Harvard", "Yale", "Duke", "Columbia"],
 
-answerThree: [
-    "Rachel",
-    "Donna",
-    "Jessica",
-    "Pam",
-],
+answerThree: ["Rachel", "Donna", "Jessica", "Pam"],
 
 insertTimer: function () {
     $(".rSix").append("<h3>Timer:</h3>");
@@ -48,8 +44,8 @@ formatQuestion: function (question) {
 formatInput: function (answer) {
     var input = $("<input>");
     $(input).attr("type", "radio");
-    $(input).attr("id", "answerOChoice");
-    $(input).attr("name", "answerKeyOne");
+    $(input).attr("id", answer);
+    $(input).attr("name", "answerKey");
     $(input).attr("value", answer);
     return input;
 },
@@ -62,6 +58,7 @@ formatLabel: function (answer) {
 
 insertQuestionOne: function () {
     var form = $("<form>");
+    $("<form>").attr("id","form1");
     var div = $("<div>");
     var qOne = this.formatQuestion(this.questionOne);
     var iOne = this.formatInput(this.answerOne[0]);
@@ -83,6 +80,7 @@ insertQuestionOne: function () {
     form.append(qOne);
     form.append(div);
     $(".rThree").append(form);
+    
 },
 
 insertQuestionTwo: function () {
@@ -133,21 +131,39 @@ insertQuestionThree: function () {
     form.append(qOne);
     form.append(div);
     $(".rFive").append(form);
+    
 },
 
 insertButton: function () {
     var button = $("<button>");
     button.text("Submit")
-    $(button).attr("type", "submit");
+    $(button).attr("type", "button");
+    $(button).attr("id", "submit");
     $(button).addClass("btn")
     $(button).addClass("btn-primary")
-    $(button).addClass("buttonTwo")
+    $(button).addClass("btn-sm")
     $(".rSeven").append(button);
 },
 
 begin: function () {
     $(".beg").remove();
 },
+end: function () {
+    $(".end").empty();
+    var h = $("<h3>")
+    var h2 = $("<h3>")
+    var h3 = $("<h3>")
+    var h4 = $("<h3>")
+    h.text("All Done !");
+    h2.text("Correct: " + correct);
+    h3.text("Inorrect: " + incorrect);
+    h4.text("Unanswered: " + unanswered);
+    $(".rSix").append(h);
+    $(".rThree").append(h2);
+    $(".rFour").append(h3);
+    $(".rFive").append(h4);
+
+}
 
 };
 
@@ -155,11 +171,11 @@ begin: function () {
 function run() {
     clearInterval(intervalId);
     intervalId = setInterval(decrement, 1000);
-};
+}
 
 function stop() {
     clearInterval(intervalId);
-};
+}
 
 function decrement() {
     timeRemaining--;
@@ -168,7 +184,68 @@ function decrement() {
         stop();
         alert("Time Up!");
       }
-};
+    else {
+        return;
+    }
+}
+/////////////////////////////////////////////////////////////////
+
+function checked() {
+    var check = document.getElementsByName("answerKey");
+        for ( i = 0; i < 4; i++) {
+            var ans = check[i].value;
+            if (check[i].checked) {
+                set1.push(ans);
+            }
+        }
+        for ( i = 4; i < 8; i++) {
+            var ans = check[i].value;
+            if (check[i].checked) {
+                set2.push(ans);
+            }
+        }
+        for ( i = 8; i < 12; i++) {
+            var ans = check[i].value;
+            if (check[i].checked) {
+                set3.push(ans);
+            }
+        }
+    }
+
+function scoreOne() {
+    if (set1.includes("Mike")) {
+        correct++;
+    }
+    else if (set1.length === 0) {
+        unanswered++;
+    }
+    else {
+        incorrect++;
+    }
+}
+function scoreTwo() {
+    if (set1.includes("Mike")) {
+        correct++;
+    }
+    else if (set1.length === 0) {
+        unanswered++;
+    }
+    else {
+        incorrect++;
+    }
+}
+function scoreThree() {
+    if (set1.includes("Mike")) {
+        correct++;
+    }
+    else if (set1.length === 0) {
+        unanswered++;
+    }
+    else {
+        incorrect++;
+    }
+}
+
 
 /////////////////////////////////////////////////////////////////
 $(".btn").click(function() {
@@ -177,9 +254,21 @@ $(".btn").click(function() {
     triviaGame.insertQuestionOne();
     triviaGame.insertQuestionTwo();
     triviaGame.insertQuestionThree();
-    triviaGame.insertButton();
-});
+    triviaGame.insertButton();   
+})
 
 $(".btn").on("click", run);
+
+$(document).on('click','#submit', function(){
+    checked();
+    scoreOne();
+    scoreTwo();
+    scoreThree();
+    stop();
+    triviaGame.end();
+    console.log(correct);
+    console.log(incorrect);
+    console.log(unanswered);
+ }) 
 
 
