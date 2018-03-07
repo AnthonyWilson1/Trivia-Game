@@ -224,7 +224,7 @@ function scoreOne() {
     }
 }
 function scoreTwo() {
-    if (set1.includes("Mike")) {
+    if (set2.includes("Harvard")) {
         correct++;
     }
     else if (set1.length === 0) {
@@ -235,7 +235,7 @@ function scoreTwo() {
     }
 }
 function scoreThree() {
-    if (set1.includes("Mike")) {
+    if (set3.includes("Rachel")) {
         correct++;
     }
     else if (set1.length === 0) {
@@ -269,6 +269,9 @@ $(document).on('click','#submit', function(){
     console.log(correct);
     console.log(incorrect);
     console.log(unanswered);
+    console.log(set1);
+    console.log(set2);
+    console.log(set3);
  }) 
 
 
