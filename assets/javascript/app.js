@@ -267,12 +267,6 @@ $(document).on('click','#submit', function(){
     scoreThree();
     stop();
     triviaGame.end();
-    console.log(correct);
-    console.log(incorrect);
-    console.log(unanswered);
-    console.log(set1);
-    console.log(set2);
-    console.log(set3);
  }) 
 
 
