@@ -1,4 +1,4 @@
-var timeRemaining = 60
+var timeRemaining = 30;
 
 var intervalId;
 
@@ -167,7 +167,6 @@ end: function () {
 
 };
 
-//////////////////////////////////////////////////////////////////
 function run() {
     clearInterval(intervalId);
     intervalId = setInterval(decrement, 1000);
@@ -183,12 +182,16 @@ function decrement() {
     if (timeRemaining === 0) {
         stop();
         alert("Time Up!");
+        checked();
+        scoreOne();
+        scoreTwo();
+        scoreThree();
+        triviaGame.end();
       }
     else {
         return;
     }
 }
-/////////////////////////////////////////////////////////////////
 
 function checked() {
     var check = document.getElementsByName("answerKey");
@@ -216,7 +219,7 @@ function scoreOne() {
     if (set1.includes("Mike")) {
         correct++;
     }
-    else if (set1.length === 0) {
+    else if (!set1.length) {
         unanswered++;
     }
     else {
@@ -227,7 +230,7 @@ function scoreTwo() {
     if (set2.includes("Harvard")) {
         correct++;
     }
-    else if (set1.length === 0) {
+    else if (!set2.length) {
         unanswered++;
     }
     else {
@@ -238,7 +241,7 @@ function scoreThree() {
     if (set3.includes("Rachel")) {
         correct++;
     }
-    else if (set1.length === 0) {
+    else if (!set3.length) {
         unanswered++;
     }
     else {
@@ -246,15 +249,13 @@ function scoreThree() {
     }
 }
 
-
-/////////////////////////////////////////////////////////////////
 $(".btn").click(function() {
     triviaGame.begin();
     triviaGame.insertTimer();
     triviaGame.insertQuestionOne();
     triviaGame.insertQuestionTwo();
     triviaGame.insertQuestionThree();
-    triviaGame.insertButton();   
+    triviaGame.insertButton();  
 })
 
 $(".btn").on("click", run);
